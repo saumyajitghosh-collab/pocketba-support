@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — PostTradeRFI</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=Overpass:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0E17;
+    --bg-card: #111827;
+    --bg-elevated: #1a1f2e;
+    --gold: #F59E0B;
+    --gold-light: #FBBF24;
+    --gold-dim: rgba(245,158,11,0.08);
+    --gold-border: rgba(245,158,11,0.15);
+    --green: #10B981;
+    --blue: #3B82F6;
+    --purple: #8B5CF6;
+    --text: #E2E8F0;
+    --text-dim: #94A3B8;
+    --text-muted: #64748B;
+    --border: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Overpass', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Ambient glow */
+  .glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-orb.gold { width: 500px; height: 500px; background: var(--gold); opacity: 0.03; top: -100px; left: -100px; }
+  .glow-orb.blue { width: 400px; height: 400px; background: var(--blue); opacity: 0.02; bottom: 10%; right: -80px; }
+
+  /* Navigation */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 20px 0;
+    background: rgba(11,14,23,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav .inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold), #D97706);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 12px rgba(245,158,11,0.2);
+  }
+
+  .logo-text {
+    font-family: 'Newsreader', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: -0.02em;
+  }
+
+  nav a.support-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    transition: color 0.3s;
+    letter-spacing: 0.02em;
+  }
+
+  nav a.support-link:hover { color: var(--gold); }
+
+  /* Hero */
+  .hero {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 32px 48px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease;
+  }
+
+  .hero .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Newsreader', serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero .meta {
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .hero .meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero .meta .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  /* Divider */
+  .divider {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .divider hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  }
+
+  /* Content */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 32px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.2s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.3s; }
+  .section:nth-child(7) { animation-delay: 0.35s; }
+  .section:nth-child(8) { animation-delay: 0.4s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .section-icon.gold { background: var(--gold-dim); border: 1px solid var(--gold-border); }
+  .section-icon.green { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.15); }
+  .section-icon.blue { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.15); }
+  .section-icon.purple { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.15); }
+
+  h2 {
+    font-family: 'Newsreader', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 16px;
+    line-height: 1.85;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* Data cards */
+  .data-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+
+  .data-card h3 {
+    font-family: 'Newsreader', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .data-item {
+    background: var(--bg-elevated);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+
+  .data-item .label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .data-item .value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .data-item .value.green { color: var(--green); }
+  .data-item .value.gold { color: var(--gold); }
+
+  /* Highlight box */
+  .highlight-box {
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .highlight-box .icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .highlight-box p { color: var(--gold-light); margin: 0; font-weight: 400; }
+
+  /* Rights list */
+  .rights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .right-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--text);
+    transition: border-color 0.3s;
+  }
+
+  .right-item:hover { border-color: var(--gold-border); }
+  .right-item .check { color: var(--green); font-weight: 700; }
+
+  /* Contact card */
+  .contact-card {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+    border: 1px solid var(--gold-border);
+    border-radius: 18px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 32px;
+  }
+
+  .contact-card h3 {
+    font-family: 'Newsreader', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .contact-card p { color: var(--text-dim); font-size: 14px; }
+
+  .contact-card a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), #D97706);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(245,158,11,0.25);
+  }
+
+  .contact-card a:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245,158,11,0.35); }
+
+  /* Footer */
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer p { font-size: 12px; color: var(--text-muted); margin: 0; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 20px 32px; }
+    .content { padding: 32px 20px 60px; }
+    .data-grid { grid-template-columns: 1fr; }
+    .rights-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-orb gold"></div>
+<div class="glow-orb blue"></div>
+
+<nav>
+  <div class="inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">📡</div>
+      <div class="logo-text">PostTradeRFI</div>
+    </a>
+    <a href="support.html" class="support-link">Support ↗</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">🔒 Legal</div>
+  <h1>Privacy <span>Policy</span></h1>
+  <div class="meta">
+    <span>Effective: February 24, 2026</span>
+    <span class="dot"></span>
+    <span>Last Updated: February 24, 2026</span>
+    <span class="dot"></span>
+    <span>Version 1.0</span>
+  </div>
+</div>
+
+<div class="divider"><hr></div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon gold">📌</div>
+      <h2>Overview</h2>
+    </div>
+    <p>PostTradeRFI ("we", "our", "the App") is a voice-powered trade intelligence tool designed for post-trade operations professionals. This Privacy Policy explains how we collect, use, and protect your information when you use our mobile application.</p>
+    <p>We are committed to protecting your privacy and handling your data with the utmost care. We believe in transparency and want you to understand exactly what data we process and why.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon green">📊</div>
+      <h2>Information We Collect</h2>
+    </div>
+
+    <div class="data-card">
+      <h3>Audio Recordings</h3>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="label">What</div>
+          <div class="value">Voice recordings of trade details</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Purpose</div>
+          <div class="value">AI-powered analysis and auto-fill</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Storage</div>
+          <div class="value green">Temporary — processed and discarded</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Shared With</div>
+          <div class="value gold">Anthropic AI (for processing only)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-card">
+      <h3>Trade Data</h3>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="label">What</div>
+          <div class="value">Trade details you enter or AI extracts</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Storage</div>
+          <div class="value green">On-device only</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Exported When</div>
+          <div class="value">Only when you tap "Export Excel"</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Shared With</div>
+          <div class="value green">No one — stays on your device</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-card">
+      <h3>What We Do NOT Collect</h3>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="label">Personal Identity</div>
+          <div class="value green">No names, emails, or accounts</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Location</div>
+          <div class="value green">No GPS or location tracking</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Analytics</div>
+          <div class="value green">No behavioral tracking</div>
+        </div>
+        <div class="data-item">
+          <div class="label">Advertising</div>
+          <div class="value green">No ads, no ad tracking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon blue">🤖</div>
+      <h2>AI Processing</h2>
+    </div>
+    <p>When you record a voice note, the audio is sent to Anthropic's Claude AI API for analysis. The AI extracts trade-related information (counterparty names, ISIN codes, amounts, settlement details) and returns structured data to auto-fill your form.</p>
+
+    <div class="highlight-box">
+      <span class="icon">⚡</span>
+      <p>Audio recordings are transmitted to Anthropic's servers solely for real-time processing. They are not stored, retained, or used for AI training purposes. The audio is processed and immediately discarded by Anthropic's systems.</p>
+    </div>
+
+    <p>For more information about Anthropic's data handling practices, please refer to <a href="https://www.anthropic.com/privacy" style="color: var(--gold);">Anthropic's Privacy Policy</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon gold">💾</div>
+      <h2>Data Storage & Security</h2>
+    </div>
+    <p>All trade data you enter or that is extracted by AI remains on your device's local storage. We do not maintain servers or databases that store your trade information. When you export data to Excel, the file is generated locally on your device.</p>
+    <p>We implement reasonable security measures appropriate for a client-side application, including secure API communication over HTTPS for AI processing requests.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon purple">🛡️</div>
+      <h2>Your Rights</h2>
+    </div>
+    <p>Since your data stays on your device, you have full control at all times.</p>
+    <div class="rights-grid">
+      <div class="right-item"><span class="check">✓</span> Delete all data by uninstalling the app</div>
+      <div class="right-item"><span class="check">✓</span> Clear trade data at any time within the app</div>
+      <div class="right-item"><span class="check">✓</span> Revoke microphone permission in iOS Settings</div>
+      <div class="right-item"><span class="check">✓</span> Use the app in manual mode without voice</div>
+      <div class="right-item"><span class="check">✓</span> Export your data in Excel format anytime</div>
+      <div class="right-item"><span class="check">✓</span> No account or registration required</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon green">👶</div>
+      <h2>Children's Privacy</h2>
+    </div>
+    <p>PostTradeRFI is a professional financial tool not intended for use by anyone under the age of 18. We do not knowingly collect information from children. If you believe a child has used this app, the data exists only on that device and can be removed by uninstalling the app.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon blue">🔄</div>
+      <h2>Changes to This Policy</h2>
+    </div>
+    <p>We may update this Privacy Policy from time to time. Any changes will be reflected in the "Last Updated" date above. Continued use of the App after changes constitutes acceptance of the revised policy. For significant changes, we will provide notice through the App.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon gold">📬</div>
+      <h2>Contact Us</h2>
+    </div>
+    <p>If you have questions about this Privacy Policy or our data practices, we'd love to hear from you.</p>
+    <div class="contact-card">
+      <h3>Get in Touch</h3>
+      <p>Have privacy concerns or questions? We respond within 48 hours.</p>
+      <a href="mailto:saumyajit.posttraderfi@gmail.com">✉️ saumyajit.posttraderfi@gmail.com</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 PostTradeRFI. All rights reserved.</p>
+  <p><a href="support.html">Support</a> · <a href="privacy.html">Privacy</a></p>
+</footer>
+
+</body>
+</html>

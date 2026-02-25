@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — PocketBA</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=Overpass:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0E17;
+    --bg-card: #111827;
+    --bg-elevated: #1a1f2e;
+    --gold: #F59E0B;
+    --gold-light: #FBBF24;
+    --gold-dim: rgba(245,158,11,0.08);
+    --gold-border: rgba(245,158,11,0.15);
+    --green: #10B981;
+    --green-dim: rgba(16,185,129,0.08);
+    --green-border: rgba(16,185,129,0.15);
+    --blue: #3B82F6;
+    --blue-dim: rgba(59,130,246,0.08);
+    --blue-border: rgba(59,130,246,0.15);
+    --purple: #8B5CF6;
+    --purple-dim: rgba(139,92,246,0.08);
+    --purple-border: rgba(139,92,246,0.15);
+    --red: #EF4444;
+    --text: #E2E8F0;
+    --text-dim: #94A3B8;
+    --text-muted: #64748B;
+    --border: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Overpass', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-orb.gold { width: 500px; height: 500px; background: var(--gold); opacity: 0.03; top: -100px; right: -100px; }
+  .glow-orb.green { width: 400px; height: 400px; background: var(--green); opacity: 0.02; bottom: 10%; left: -80px; }
+
+  /* Navigation */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 20px 0;
+    background: rgba(11,14,23,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav .inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold), #D97706);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 12px rgba(245,158,11,0.2);
+  }
+
+  .logo-text {
+    font-family: 'Newsreader', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: -0.02em;
+  }
+
+  nav a.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    transition: color 0.3s;
+    letter-spacing: 0.02em;
+  }
+
+  nav a.nav-link:hover { color: var(--gold); }
+
+  /* Hero */
+  .hero {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 32px 48px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease;
+    text-align: center;
+  }
+
+  .hero .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Newsreader', serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .divider {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .divider hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  }
+
+  /* Quick Actions */
+  .quick-actions {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .action-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    animation: fadeUp 0.8s ease both;
+    cursor: default;
+  }
+
+  .action-card:nth-child(2) { animation-delay: 0.1s; }
+  .action-card:nth-child(3) { animation-delay: 0.2s; }
+
+  .action-card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .action-card .icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .action-card h3 {
+    font-family: 'Newsreader', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .action-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Content */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px 32px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Getting Started Guide */
+  .guide-section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .guide-section h2 {
+    font-family: 'Newsreader', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .step-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .step-card:hover { border-color: var(--gold-border); }
+
+  .step-number {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .step-number.gold { background: var(--gold); color: var(--bg); }
+  .step-number.green { background: var(--green); color: var(--bg); }
+  .step-number.blue { background: var(--blue); color: #fff; }
+  .step-number.purple { background: var(--purple); color: #fff; }
+
+  .step-card h4 {
+    font-family: 'Overpass', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+
+  .step-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* FAQ Section */
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .faq-item:hover { border-color: var(--gold-border); }
+
+  .faq-question {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+
+  .faq-question h4 {
+    font-family: 'Overpass', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+    padding-right: 16px;
+  }
+
+  .faq-toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--bg-elevated);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--gold);
+    flex-shrink: 0;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .faq-item.open .faq-toggle {
+    transform: rotate(45deg);
+    background: var(--gold-dim);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 400px;
+    padding: 0 24px 20px;
+  }
+
+  .faq-answer p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  /* Feature Reference */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .feature-card {
+    background: var(--bg-card);
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .feature-card:hover { border-color: var(--gold-border); transform: translateY(-2px); }
+
+  .feature-card .emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+
+  .feature-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .feature-card p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Contact Section */
+  .contact-section {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+    border: 1px solid var(--gold-border);
+    border-radius: 24px;
+    padding: 48px;
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .contact-section h2 {
+    font-family: 'Newsreader', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 12px;
+    justify-content: center;
+  }
+
+  .contact-section > p {
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+
+  .contact-methods {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .contact-btn.primary {
+    background: linear-gradient(135deg, var(--gold), #D97706);
+    color: var(--bg);
+    box-shadow: 0 4px 16px rgba(245,158,11,0.25);
+  }
+
+  .contact-btn.secondary {
+    background: var(--bg-elevated);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .contact-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.3); }
+
+  .response-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* Footer */
+  footer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer p { font-size: 12px; color: var(--text-muted); margin: 0; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 20px 32px; }
+    .content { padding: 16px 20px 60px; }
+    .quick-actions { padding: 32px 20px; }
+    .contact-section { padding: 32px 20px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-orb gold"></div>
+<div class="glow-orb green"></div>
+
+<nav>
+  <div class="inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">📡</div>
+      <div class="logo-text">PocketBA</div>
+    </a>
+    <a href="privacy.html" class="nav-link">Privacy Policy ↗</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">💬 Support Center</div>
+  <h1>How Can We <span>Help?</span></h1>
+  <p>Everything you need to get the most out of PocketBA's voice-powered trade intelligence platform.</p>
+</div>
+
+<div class="divider"><hr></div>
+
+<!-- Quick Actions -->
+<div class="quick-actions">
+  <div class="action-card">
+    <div class="icon-wrapper" style="background: var(--gold-dim); border: 1px solid var(--gold-border);">🎙️</div>
+    <h3>Voice Not Working?</h3>
+    <p>Go to <strong>iOS Settings → PocketBA → Microphone</strong> and ensure it's enabled. Restart the app after granting permission.</p>
+  </div>
+  <div class="action-card">
+    <div class="icon-wrapper" style="background: var(--green-dim); border: 1px solid var(--green-border);">📥</div>
+    <h3>Excel Export Issues?</h3>
+    <p>Make sure you have at least one trade with data. The exported file opens in Excel, Numbers, and Google Sheets.</p>
+  </div>
+  <div class="action-card">
+    <div class="icon-wrapper" style="background: var(--blue-dim); border: 1px solid var(--blue-border);">🤖</div>
+    <h3>AI Not Filling Fields?</h3>
+    <p>Speak clearly and include specific trade terms. The AI works best with structured trade descriptions. You can always edit manually.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Getting Started -->
+  <div class="guide-section">
+    <h2>🚀 Getting Started</h2>
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="step-number gold">1</div>
+        <h4>Record Your Trade</h4>
+        <p>Tap the record button and describe your trade naturally. Include details like counterparty, asset class, notional amount, currency, and settlement method.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number green">2</div>
+        <h4>AI Auto-Fill</h4>
+        <p>Watch as AI analyzes your recording and populates 20+ fields automatically. Fields highlight as they're filled so you can see what was captured.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number blue">3</div>
+        <h4>Review & Edit</h4>
+        <p>Check the auto-filled data in the color-coded form view. Use dropdowns for standardized fields. Switch to table view for a summary of all trades.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number purple">4</div>
+        <h4>Export to Excel</h4>
+        <p>Tap "Export Excel" to download a beautifully formatted report with color-coded headers, dropdowns, conditional formatting, and a dashboard sheet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample Voice Script -->
+  <div class="guide-section">
+    <h2>🗣️ Sample Voice Script</h2>
+    <div style="background: var(--bg-card); border: 1px solid var(--gold-border); border-radius: 16px; padding: 28px; margin-top: 16px;">
+      <p style="color: var(--gold-light); font-style: italic; font-size: 15px; line-height: 1.9; margin: 0;">
+        "This is a buy trade, Trade ID TRD-001247, counterparty Goldman Sachs International, for common stock Apple, ISIN US0378331005. The notional amount is 2.5 million US dollars, quantity 15,000 shares at 166.67. Settlement is DVP through DTCC, T+2 settlement date. Custodian is BNY Mellon. Status is pending, high priority."
+      </p>
+      <p style="color: var(--text-muted); font-size: 12px; margin-top: 12px; margin-bottom: 0;">
+        💡 Tip: You don't have to follow this exact format. The AI understands natural speech and financial jargon.
+      </p>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="guide-section">
+    <h2>❓ Frequently Asked Questions</h2>
+    <div style="margin-top: 16px;">
+      
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>What languages does the voice recognition support?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>The AI primarily supports English, but it can understand financial terms and counterparty names in multiple languages. For best results, use English for the primary trade description and industry-standard terminology (ISIN, DVP, FOP, etc.).</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>Is my voice data stored anywhere?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>No. Your audio recordings are sent to Anthropic's AI for real-time processing only. They are not stored, retained, or used for training. Once the AI extracts the trade information, the audio is discarded. See our Privacy Policy for full details.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>Can I use the app without voice recording?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>Absolutely. You can manually fill all 20+ fields using the form view. The voice recording is optional — it simply speeds up data entry. All dropdown fields and text inputs work independently of the AI feature.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>What file format does the Excel export use?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>The app exports files in .xls format compatible with Microsoft Excel, Apple Numbers, Google Sheets, and LibreOffice Calc. The export includes color-coded group headers, dropdown data validations, conditional formatting for status and priority, and a separate Dashboard sheet with KPI summaries.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>How many trades can I manage at once?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>There's no hard limit. You can add as many trades as needed using the "Add Trade" button. Each trade maintains its own set of 20+ fields. Switch between trades using tabs in form view, or see all trades simultaneously in table view.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>Does the app work offline?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>Manual data entry and Excel export work fully offline. Voice recording requires an internet connection since the AI analysis is performed in the cloud. If you record while offline, the app will use demo data as a fallback.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>What trade fields are supported?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>PocketBA supports 20+ fields organized in 4 groups: <strong>Trade Details</strong> (Trade ID, Counterparty, Trade Date, Settlement Date, Asset Class), <strong>Instrument</strong> (Type, ISIN/CUSIP, Currency, Notional, Quantity, Price), <strong>Settlement</strong> (Buy/Sell, Method, CSD, SSI Details, Broker, Custodian), and <strong>Status</strong> (Status, Priority, Notes). Fields with standardized values have dropdowns.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-question">
+          <h4>Can I customize the Excel export template?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>The current version uses a professionally designed template with industry-standard formatting. Custom templates are planned for a future update. The exported file is fully editable in Excel, so you can adjust formatting after export.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Feature Reference -->
+  <div class="guide-section">
+    <h2>✨ Feature Reference</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="emoji">🎙️</span>
+        <h4>Voice Recording</h4>
+        <p>Real-time waveform visualization, recording timer, and one-tap start/stop controls.</p>
+      </div>
+      <div class="feature-card">
+        <span class="emoji">🤖</span>
+        <h4>AI Auto-Fill</h4>
+        <p>Claude AI extracts trade details from speech. Animated field population with progress tracking.</p>
+      </div>
+      <div class="feature-card">
+        <span class="emoji">📝</span>
+        <h4>Smart Form</h4>
+        <p>4 color-coded groups with 20+ fields. Dropdowns for Asset Class, Currency, Status, and more.</p>
+      </div>
+      <div class="feature-card">
+        <span class="emoji">📊</span>
+        <h4>Table View</h4>
+        <p>See all trades at a glance. Color-coded status badges, Buy/Sell indicators, and quick actions.</p>
+      </div>
+      <div class="feature-card">
+        <span class="emoji">📥</span>
+        <h4>Excel Export</h4>
+        <p>Formatted reports with dropdowns, conditional formatting, dashboard, auto-filter, and print layout.</p>
+      </div>
+      <div class="feature-card">
+        <span class="emoji">🔄</span>
+        <h4>Multi-Trade</h4>
+        <p>Manage unlimited trades with tabbed navigation. Add, switch, and remove trades freely.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Requirements -->
+  <div class="guide-section">
+    <h2>⚙️ System Requirements</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px;">
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;">
+        <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">Platform</div>
+        <div style="font-size: 14px; color: var(--text); font-weight: 600;">iOS 16.0 or later</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;">
+        <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">Permissions</div>
+        <div style="font-size: 14px; color: var(--text); font-weight: 600;">Microphone (optional)</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;">
+        <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">Network</div>
+        <div style="font-size: 14px; color: var(--text); font-weight: 600;">Required for AI features</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;">
+        <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">Devices</div>
+        <div style="font-size: 14px; color: var(--text); font-weight: 600;">iPhone & iPad</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact-section">
+    <h2>📬 Still Need Help?</h2>
+    <p>Our team is here to assist you with any questions about PocketBA. We typically respond within 24-48 hours.</p>
+    <div class="contact-methods">
+      <a href="/cdn-cgi/l/email-protection#1c6f7d6971657d767568326c736f68686e7d78796e7a755c7b717d7570327f7371" class="contact-btn primary">✉️ Email Support</a>
+      <a href="https://github.com/saumyajit/pocketba/issues" class="contact-btn secondary">🐛 Report a Bug</a>
+    </div>
+    <p class="response-note">Average response time: 24 hours</p>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 PocketBA. All rights reserved.</p>
+  <p><a href="support.html">Support</a> · <a href="privacy.h
